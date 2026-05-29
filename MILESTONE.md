@@ -6,21 +6,21 @@ Do not scaffold features from future milestones early.
 
 ---
 
-## Milestone 1: Project Setup
-- [ ] Initialize Next.js project with TailwindCSS
-- [ ] Connect Supabase project
-- [ ] Deploy empty app to Vercel
-- [ ] Deploy to Vercel manually and confirm app is live with no errors
+## Milestone 1: Project Setup ✅
+- [x] Initialize Next.js project with TailwindCSS
+- [x] Connect Supabase project
+- [x] Deploy empty app to Vercel
+- [x] Deploy to Vercel manually and confirm app is live with no errors
 
 ✅ Done when: App is live on Vercel with no errors
 
 ---
 
-## Milestone 2: Authentication
-- [ ] Email + password sign up
-- [ ] Email + password log in
-- [ ] Log out
-- [ ] Protect routes (redirect to login if not authenticated)
+## Milestone 2: Authentication ✅
+- [x] Email + password sign up
+- [x] Email + password log in
+- [x] Log out
+- [x] Protect routes (redirect to login if not authenticated)
 
 ✅ Done when: User can register, log in, and log out successfully
 
