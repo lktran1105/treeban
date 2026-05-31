@@ -1,0 +1,28 @@
+{
+  "access_token": "mock-access-token-local-dev",
+  "result": {
+    "is_plant": {
+      "binary": true,
+      "probability": 0.998
+    },
+    "classification": {
+      "suggestions": [
+        {
+          "name": "Monstera deliciosa",
+          "probability": 0.92,
+          "similar_images": []
+        },
+        {
+          "name": "Monstera adansonii",
+          "probability": 0.05,
+          "similar_images": []
+        },
+        {
+          "name": "Epipremnum aureum",
+          "probability": 0.02,
+          "similar_images": []
+        }
+      ]
+    }
+  }
+}

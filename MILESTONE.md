@@ -26,13 +26,14 @@ Do not scaffold features from future milestones early.
 
 ---
 
-## Milestone 3: Plant Identification
-- [ ] Image upload UI on identification screen
-- [ ] Next.js API Route that calls Plant.id API
-- [ ] Display plant name and confidence score from result
-- [ ] Handle low confidence (< 0.5 confidence score — show multiple suggestions)
-- [ ] Set up mock/fixture Plant.id response for local dev to avoid burning API credits
-- [ ] Handle API errors gracefully
+## Milestone 3: Plant Identification ✅
+- [x] Image upload UI on identification screen
+- [x] In-browser camera viewfinder using getUserMedia (Use Camera + Upload Photo as two entry points)
+- [x] Next.js API Route that calls Plant.id API
+- [x] Display plant name and confidence score from result
+- [x] Handle low confidence (< 0.5 confidence score — show multiple suggestions)
+- [x] Set up mock/fixture Plant.id response for local dev to avoid burning API credits (USE_MOCK=true)
+- [x] Handle API errors gracefully
 
 ✅ Done when: User can upload a photo and see a real Plant.id result
 

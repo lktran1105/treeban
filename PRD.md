@@ -176,10 +176,12 @@ Treeban is a web app that helps users learn and remember plants through real-wor
   3. The third button is "Quiz" so the user can click on it to quiz themselves on the plants they have identified
 
 ## Screen 3: Plant Identification Screen
-- On the plant identification screen, the screen will open up as a camera screen so the user will have a camera button
-- Mobile: camera capture + file upload
-- Desktop: file upload only
-- Once the user clicks on the camera or uploads a file, it will show a loading state and then display the results of the plant, showing the name and the confidence score of the identification
+- On the plant identification screen, the user is presented with two entry points side by side: **Use Camera** and **Upload Photo**
+- **Use Camera**: opens an in-browser live viewfinder using getUserMedia (rear camera on mobile via `facingMode: 'environment'`). User frames the plant and taps the shutter button to capture. Camera stream stops automatically on capture, cancel, or navigation away.
+- **Upload Photo**: opens the file picker so the user can select an image from their library
+- Both paths work on mobile and desktop. If camera permission is denied or no camera is found, a descriptive error is shown and the user can fall back to upload.
+- Once an image is selected or captured, the user clicks Identify Plant. A loading state is shown while the API runs.
+- Results display the plant name and confidence score. If confidence < 0.5, multiple suggestions are shown with an amber "Low confidence" label.
 - The results screen will have an option to create a flashcard
 - After the user clicks create flashcard, it will show a flashcard creation screen where the user can add a personal note
 
@@ -229,6 +231,7 @@ NEXT_PUBLIC_SUPABASE_URL=      → your Supabase project URL (safe to expose in 
 NEXT_PUBLIC_SUPABASE_ANON_KEY= → used client-side for auth and data access (safe to expose in browser)
 SUPABASE_SERVICE_ROLE_KEY=     → used server-side in API Routes only, never in browser
 PLANT_API_KEY=                 → used server-side in API Routes only, never in browser
+USE_MOCK=                      → set to "true" during local dev to skip Plant.id API calls and return fixture data
 ```
 
 ### Security Rules
