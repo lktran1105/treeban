@@ -50,22 +50,22 @@ Do not scaffold features from future milestones early.
 
 ---
 
-## Milestone 5: Timeline (Collections)
-- [ ] Timeline screen shows all user's plant_identifications
-- [ ] Sorted chronologically, grouped by day/month/year
-- [ ] Each entry shows image, plant name, and date
+## Milestone 5: Timeline (Collections) ✅
+- [x] Timeline screen shows all user's plant_identifications
+- [x] Sorted chronologically, grouped by day/month/year
+- [x] Each entry shows image, plant name, and date
 
 ✅ Done when: User can scroll through their full identification history
 
 ---
 
-## Milestone 6: Quiz Mode
-- [ ] Quiz screen shows a random flashcard image
-- [ ] User types in plant name and clicks Check My Answer
-- [ ] App shows correct/incorrect result
-- [ ] User rates Easy / Medium / Hard
-- [ ] next_review_at updated in Supabase based on rating
-- [ ] Skip option shows the correct answer without rating
+## Milestone 6: Quiz Mode ✅
+- [x] Quiz screen shows a random flashcard image
+- [x] User types in plant name and clicks Check My Answer
+- [x] App shows correct/incorrect result
+- [x] User rates Easy / Medium / Hard
+- [x] next_review_at updated in Supabase based on rating
+- [x] Skip option shows the correct answer without rating
 
 ✅ Done when: User can complete a full quiz session with spaced repetition scheduling
 
