@@ -12,9 +12,11 @@ interface Suggestion {
 interface IdentifyResult {
   isPlant: boolean
   suggestions: Suggestion[]
+  identificationId: string
+  imageUrl: string
 }
 
-type Stage = 'upload' | 'camera' | 'loading' | 'result' | 'error'
+type Stage = 'upload' | 'camera' | 'loading' | 'result' | 'flashcard' | 'saved' | 'error'
 
 export default function IdentifyPage() {
   const [stage, setStage] = useState<Stage>('upload')
@@ -22,6 +24,9 @@ export default function IdentifyPage() {
   const [result, setResult] = useState<IdentifyResult | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [personalNote, setPersonalNote] = useState('')
+  const [savingFlashcard, setSavingFlashcard] = useState(false)
+  const [flashcardError, setFlashcardError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
@@ -42,7 +47,6 @@ export default function IdentifyPage() {
       })
       streamRef.current = stream
       setStage('camera')
-      // assign srcObject after the video element renders
       requestAnimationFrame(() => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream
@@ -114,6 +118,37 @@ export default function IdentifyPage() {
     }
   }
 
+  async function handleSaveFlashcard() {
+    if (!result) return
+    setSavingFlashcard(true)
+    setFlashcardError(null)
+
+    try {
+      const res = await fetch('/api/flashcards', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plantIdentificationId: result.identificationId,
+          plantName: result.suggestions[0].name,
+          imageUrl: result.imageUrl,
+          personalNote: personalNote.trim() || undefined,
+        }),
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        setFlashcardError(data.error ?? 'Failed to save flashcard. Please try again.')
+        setSavingFlashcard(false)
+        return
+      }
+
+      setStage('saved')
+    } catch {
+      setFlashcardError('Something went wrong. Please try again.')
+      setSavingFlashcard(false)
+    }
+  }
+
   function handleReset() {
     stopCamera()
     setStage('upload')
@@ -121,12 +156,16 @@ export default function IdentifyPage() {
     setSelectedFile(null)
     setResult(null)
     setErrorMsg(null)
+    setPersonalNote('')
+    setFlashcardError(null)
+    setSavingFlashcard(false)
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   const topSuggestion = result?.suggestions[0]
   const lowConfidence = topSuggestion && topSuggestion.probability < 0.5
   const showMultiple = lowConfidence && result && result.suggestions.length > 1
+  const displayImage = result?.imageUrl ?? preview
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-stone-50 p-4">
@@ -212,13 +251,7 @@ export default function IdentifyPage() {
           <div className="mt-6 flex flex-col gap-4">
             <div className="relative w-full overflow-hidden rounded-2xl bg-black">
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                muted
-                className="w-full"
-              />
+              <video ref={videoRef} autoPlay playsInline muted className="w-full" />
             </div>
             <div className="flex items-center justify-between">
               <button
@@ -242,9 +275,9 @@ export default function IdentifyPage() {
         {/* Result stage */}
         {stage === 'result' && result && topSuggestion && (
           <div className="mt-6 flex flex-col gap-4">
-            {preview && (
+            {displayImage && (
               <div className="relative h-56 w-full overflow-hidden rounded-2xl">
-                <Image src={preview} alt="Identified plant" fill className="object-cover" />
+                <Image src={displayImage} alt="Identified plant" fill className="object-cover" />
               </div>
             )}
 
@@ -276,11 +309,80 @@ export default function IdentifyPage() {
                 Try another
               </button>
               <button
+                onClick={() => setStage('flashcard')}
                 className="flex-1 rounded-xl bg-stone-800 py-3 text-sm font-medium text-white transition-colors hover:bg-stone-700"
               >
                 Create Flashcard
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Flashcard creation stage */}
+        {stage === 'flashcard' && result && topSuggestion && (
+          <div className="mt-6 flex flex-col gap-4">
+            {displayImage && (
+              <div className="relative h-48 w-full overflow-hidden rounded-2xl">
+                <Image src={displayImage} alt={topSuggestion.name} fill className="object-cover" />
+              </div>
+            )}
+
+            <div className="rounded-2xl bg-white p-5 shadow-sm border border-stone-100">
+              <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Plant</p>
+              <p className="mt-1 text-xl font-semibold text-stone-800 italic">{topSuggestion.name}</p>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="note" className="text-sm font-medium text-stone-700">
+                Personal note <span className="font-normal text-stone-400">(optional)</span>
+              </label>
+              <textarea
+                id="note"
+                value={personalNote}
+                onChange={e => setPersonalNote(e.target.value)}
+                placeholder="Where did you find this? What was it like?"
+                rows={3}
+                className="rounded-xl border border-stone-200 px-3 py-2 text-sm text-stone-800 outline-none focus:border-stone-400 focus:ring-2 focus:ring-stone-100 resize-none"
+              />
+            </div>
+
+            {flashcardError && (
+              <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-600">{flashcardError}</p>
+            )}
+
+            <button
+              onClick={handleSaveFlashcard}
+              disabled={savingFlashcard}
+              className="w-full rounded-xl bg-stone-800 py-3 text-sm font-medium text-white transition-colors hover:bg-stone-700 disabled:opacity-50"
+            >
+              {savingFlashcard ? 'Saving…' : 'Save Flashcard'}
+            </button>
+
+            <button
+              onClick={handleReset}
+              className="w-full text-center text-sm text-stone-400 hover:text-stone-600"
+            >
+              Skip
+            </button>
+          </div>
+        )}
+
+        {/* Saved confirmation stage */}
+        {stage === 'saved' && result && topSuggestion && (
+          <div className="mt-6 flex flex-col gap-4">
+            <div className="flex flex-col items-center gap-3 rounded-2xl bg-green-50 p-8 text-center">
+              <span className="text-4xl">🌿</span>
+              <div>
+                <p className="font-semibold text-stone-800">Flashcard saved!</p>
+                <p className="mt-0.5 text-sm italic text-stone-500">{topSuggestion.name}</p>
+              </div>
+            </div>
+            <button
+              onClick={handleReset}
+              className="w-full rounded-xl bg-stone-800 py-3 text-sm font-medium text-white transition-colors hover:bg-stone-700"
+            >
+              Identify another plant
+            </button>
           </div>
         )}
 

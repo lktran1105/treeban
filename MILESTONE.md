@@ -39,11 +39,12 @@ Do not scaffold features from future milestones early.
 
 ---
 
-## Milestone 4: Flashcard Creation
-- [ ] "Create Flashcard" button appears after identification result
-- [ ] Flashcard saved to Supabase (plant_name, image_url, personal_note)
-- [ ] User can add optional personal note before saving
-- [ ] User can dismiss and skip flashcard creation
+## Milestone 4: Flashcard Creation ✅
+- [x] "Create Flashcard" button appears after identification result
+- [x] Image uploaded to Supabase Storage, identification saved to plant_identifications at identify time
+- [x] Flashcard saved to Supabase (plant_name, image_url, personal_note)
+- [x] User can add optional personal note before saving
+- [x] User can dismiss and skip flashcard creation
 
 ✅ Done when: User can create and save a flashcard from an identification
 
