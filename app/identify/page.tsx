@@ -35,6 +35,12 @@ export default function IdentifyPage() {
     return () => stopCamera()
   }, [])
 
+  useEffect(() => {
+    if (stage === 'camera' && videoRef.current && streamRef.current) {
+      videoRef.current.srcObject = streamRef.current
+    }
+  }, [stage])
+
   function stopCamera() {
     streamRef.current?.getTracks().forEach(t => t.stop())
     streamRef.current = null
@@ -47,11 +53,6 @@ export default function IdentifyPage() {
       })
       streamRef.current = stream
       setStage('camera')
-      requestAnimationFrame(() => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream
-        }
-      })
     } catch (err) {
       setErrorMsg(
         err instanceof DOMException && err.name === 'NotFoundError'
