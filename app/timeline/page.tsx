@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import LushBackground from '@/app/components/LushBackground'
 
 interface PlantIdentification {
   id: string
@@ -47,11 +48,12 @@ export default async function TimelinePage() {
 
   if (error) {
     return (
-      <main className="flex min-h-screen flex-col items-center bg-stone-50 p-4">
-        <div className="w-full max-w-md pt-6">
-          <Link href="/" className="text-sm text-stone-400 hover:text-stone-600">← Back</Link>
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-stone-800">Timeline</h1>
-          <p className="mt-6 text-sm text-red-600">Failed to load your timeline. Please try again.</p>
+      <main className="relative flex min-h-screen flex-col items-center overflow-hidden bg-[#1a3a2a] p-4">
+        <LushBackground />
+        <div className="relative z-10 w-full max-w-md pt-6">
+          <Link href="/" className="text-xl text-white/60 hover:text-white">← Back</Link>
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white">Timeline</h1>
+          <p className="mt-6 text-md text-red-400">Failed to load your timeline. Please try again.</p>
         </div>
       </main>
     )
@@ -61,19 +63,20 @@ export default async function TimelinePage() {
   const groups = groupByDay(identifications)
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-stone-50 p-4">
-      <div className="w-full max-w-md pt-6">
-        <Link href="/" className="text-sm text-stone-400 hover:text-stone-600">← Back</Link>
-        <h1 className="mt-4 text-2xl font-semibold tracking-tight text-stone-800">Timeline</h1>
+    <main className="relative flex min-h-screen flex-col items-center overflow-hidden bg-[#1a3a2a] p-4">
+      <LushBackground />
+      <div className="relative z-10 w-full max-w-md pt-6">
+        <Link href="/" className="text-xl text-white/60 hover:text-white">← Back</Link>
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white">Timeline</h1>
 
         {identifications.length === 0 ? (
           <div className="mt-16 flex flex-col items-center gap-3 text-center">
             <span className="text-5xl">🌱</span>
-            <p className="font-medium text-stone-700">No plants identified yet</p>
-            <p className="text-sm text-stone-400">Head to Plant Identification to scan your first plant.</p>
+            <p className="text-2xl font-medium text-white">No plants identified yet</p>
+            <p className="text-md text-white/60">Head to Plant Identification to scan your first plant.</p>
             <Link
               href="/identify"
-              className="mt-2 rounded-xl bg-stone-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-stone-700"
+              className="mt-2 rounded-xl bg-[#1a3a2a] px-5 py-2.5 text-lg font-medium text-white hover:bg-[#2d6a4f]"
             >
               Identify a plant
             </Link>
@@ -82,7 +85,7 @@ export default async function TimelinePage() {
           <div className="mt-6 flex flex-col gap-8 pb-10">
             {groups.map((group) => (
               <section key={group.label}>
-                <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-stone-400">
+                <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/50">
                   {group.label}
                 </h2>
                 <div className="flex flex-col gap-3">
@@ -101,7 +104,7 @@ export default async function TimelinePage() {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate font-medium italic text-stone-800">{item.plant_name}</p>
+                        <p className="truncate text-lg font-medium italic text-stone-800">{item.plant_name}</p>
                         <p className="mt-0.5 text-xs text-stone-400">
                           {new Date(item.identified_at).toLocaleTimeString('en-US', {
                             hour: 'numeric',

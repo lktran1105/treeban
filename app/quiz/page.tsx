@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import LushBackground from '@/app/components/LushBackground'
 
 interface Flashcard {
   id: string
@@ -39,7 +40,6 @@ export default function QuizPage() {
     loadCards()
   }, [])
 
-  // Focus input when question stage begins
   useEffect(() => {
     if (stage === 'question') {
       inputRef.current?.focus()
@@ -118,15 +118,16 @@ export default function QuizPage() {
   const card = cards[index]
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-stone-50 p-4">
-      <div className="w-full max-w-md pt-6">
-        <Link href="/" className="text-sm text-stone-400 hover:text-stone-600">← Back</Link>
-        <h1 className="mt-4 text-2xl font-semibold tracking-tight text-stone-800">Quiz</h1>
+    <main className="relative flex min-h-screen flex-col items-center overflow-hidden bg-[#1a3a2a] p-4">
+      <LushBackground />
+      <div className="relative z-10 w-full max-w-md pt-6">
+        <Link href="/" className="text-xl text-white/60 hover:text-white">← Back</Link>
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white">Quiz</h1>
 
         {/* Loading */}
         {stage === 'loading' && (
           <div className="mt-16 flex justify-center">
-            <svg className="h-6 w-6 animate-spin text-stone-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg className="h-6 w-6 animate-spin text-white/50" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
             </svg>
@@ -137,22 +138,22 @@ export default function QuizPage() {
         {stage === 'empty' && (
           <div className="mt-16 flex flex-col items-center gap-3 text-center">
             <span className="text-5xl">✅</span>
-            <p className="font-medium text-stone-700">All caught up!</p>
+            <p className="text-2xl font-medium text-white">All caught up!</p>
             {nextDueAt ? (
-              <p className="text-sm text-stone-400">
+              <p className="text-md text-white/60">
                 Next card due{' '}
                 {new Date(nextDueAt).toLocaleDateString('en-US', {
                   weekday: 'long', month: 'long', day: 'numeric',
                 })}
               </p>
             ) : (
-              <p className="text-sm text-stone-400">
+              <p className="text-md text-white/60">
                 No flashcards yet.{' '}
-                <Link href="/identify" className="underline underline-offset-2">Identify a plant</Link>{' '}
+                <Link href="/identify" className="underline underline-offset-2 text-white">Identify a plant</Link>{' '}
                 to get started.
               </p>
             )}
-            <Link href="/" className="mt-2 rounded-xl border border-stone-200 px-5 py-2.5 text-sm text-stone-600 hover:bg-stone-50">
+            <Link href="/" className="mt-2 rounded-xl border border-white/30 bg-white/10 px-5 py-2.5 text-md text-white hover:bg-white/20">
               Back to home
             </Link>
           </div>
@@ -161,7 +162,7 @@ export default function QuizPage() {
         {/* Question */}
         {(stage === 'question') && card && (
           <div className="mt-6 flex flex-col gap-4">
-            <div className="flex items-center justify-between text-xs text-stone-400">
+            <div className="flex items-center justify-between text-xs text-white/50">
               <span>{index + 1} of {cards.length}</span>
             </div>
 
@@ -169,7 +170,7 @@ export default function QuizPage() {
               <Image src={card.image_url} alt="What plant is this?" fill className="object-cover" sizes="448px" />
             </div>
 
-            <p className="text-sm font-medium text-stone-600">What plant is this?</p>
+            <p className="text-md font-medium text-white">What plant is this?</p>
 
             <input
               ref={inputRef}
@@ -178,20 +179,20 @@ export default function QuizPage() {
               onChange={e => setAnswer(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter' && answer.trim()) handleCheckAnswer() }}
               placeholder="Type the plant name…"
-              className="rounded-xl border border-stone-200 px-3 py-2.5 text-sm text-stone-800 outline-none focus:border-stone-400 focus:ring-2 focus:ring-stone-100"
+              className="rounded-xl border border-stone-200 px-3 py-2.5 text-md text-stone-800 outline-none focus:border-stone-400 focus:ring-2 focus:ring-stone-100"
             />
 
             <button
               onClick={handleCheckAnswer}
               disabled={!answer.trim()}
-              className="w-full rounded-xl bg-stone-800 py-3 text-sm font-medium text-white transition-colors hover:bg-stone-700 disabled:opacity-40"
+              className="w-full rounded-xl bg-[#1a3a2a] py-3 text-lg font-medium text-white transition-colors hover:bg-[#2d6a4f] disabled:opacity-40"
             >
               Check My Answer
             </button>
 
             <button
               onClick={handleSkip}
-              className="w-full text-center text-sm text-stone-400 hover:text-stone-600"
+              className="w-full text-center text-md text-white/50 hover:text-white"
             >
               Skip
             </button>
@@ -206,40 +207,39 @@ export default function QuizPage() {
             </div>
 
             <div className={`rounded-2xl p-4 ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
-              <p className={`text-sm font-medium ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+              <p className={`text-md font-medium ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
                 {isCorrect ? '✓ Correct!' : '✗ Not quite.'}
               </p>
-              <p className="mt-1 text-sm italic text-stone-700">{card.plant_name}</p>
+              <p className="mt-1 text-md italic text-stone-700">{card.plant_name}</p>
               {!isCorrect && answer.trim() && (
-                <p className="mt-0.5 text-xs text-stone-400">You answered: {answer.trim()}</p>
+                <p className="mt-0.5 text-sm text-stone-400">You answered: {answer.trim()}</p>
               )}
             </div>
 
             {card.personal_note && (
-              <p className="text-sm text-stone-500 italic">"{card.personal_note}"</p>
+              <p className="text-md text-white/70 italic">&ldquo;{card.personal_note}&rdquo;</p>
             )}
 
             <div className="flex flex-col gap-2">
-              <p className="text-xs font-medium uppercase tracking-wider text-stone-400">How well did you know this?</p>
+              <p className="text-xs font-medium uppercase tracking-wider text-white/50">How well did you know this?</p>
               <div className="flex gap-2">
                 {(['hard', 'medium', 'easy'] as const).map((r) => (
                   <button
                     key={r}
                     onClick={() => handleRate(r)}
                     disabled={rating}
-                    className={`flex-1 rounded-xl py-3 text-sm font-medium capitalize transition-colors disabled:opacity-50 ${
-                      r === 'hard'
-                        ? 'bg-red-100 text-red-700 hover:bg-red-200'
-                        : r === 'medium'
+                    className={`flex-1 rounded-xl py-3 text-md font-medium capitalize transition-colors disabled:opacity-50 ${r === 'hard'
+                      ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                      : r === 'medium'
                         ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
                         : 'bg-green-100 text-green-700 hover:bg-green-200'
-                    }`}
+                      }`}
                   >
                     {r}
                   </button>
                 ))}
               </div>
-              <p className="text-center text-xs text-stone-400">Hard = 1 day · Medium = 3 days · Easy = 7 days</p>
+              <p className="text-center text-xs text-white/40">Hard = 1 day · Medium = 3 days · Easy = 7 days</p>
             </div>
           </div>
         )}
@@ -251,18 +251,18 @@ export default function QuizPage() {
               <Image src={card.image_url} alt={card.plant_name} fill className="object-cover" sizes="448px" />
             </div>
 
-            <div className="rounded-2xl bg-stone-100 p-4">
+            <div className="rounded-2xl bg-white p-5">
               <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Answer</p>
-              <p className="mt-1 text-lg font-semibold italic text-stone-800">{card.plant_name}</p>
+              <p className="mt-1 text-2xl font-semibold italic text-stone-800">{card.plant_name}</p>
             </div>
 
             {card.personal_note && (
-              <p className="text-sm text-stone-500 italic">"{card.personal_note}"</p>
+              <p className="text-md text-white/70 italic">&ldquo;{card.personal_note}&rdquo;</p>
             )}
 
             <button
               onClick={() => advance(false)}
-              className="w-full rounded-xl bg-stone-800 py-3 text-sm font-medium text-white transition-colors hover:bg-stone-700"
+              className="w-full rounded-xl bg-[#1a3a2a] py-3 text-lg font-medium text-white transition-colors hover:bg-[#2d6a4f]"
             >
               Next
             </button>
@@ -273,18 +273,18 @@ export default function QuizPage() {
         {stage === 'complete' && (
           <div className="mt-16 flex flex-col items-center gap-3 text-center">
             <span className="text-5xl">🎉</span>
-            <p className="font-medium text-stone-700">Session complete!</p>
-            <p className="text-sm text-stone-400">You reviewed {reviewed} {reviewed === 1 ? 'plant' : 'plants'}.</p>
+            <p className="text-2xl font-medium text-white">Session complete!</p>
+            <p className="text-md text-white/60">You reviewed {reviewed} {reviewed === 1 ? 'plant' : 'plants'}.</p>
             <div className="mt-2 flex gap-3">
               <Link
                 href="/"
-                className="rounded-xl border border-stone-200 px-5 py-2.5 text-sm text-stone-600 hover:bg-stone-50"
+                className="rounded-xl border border-white/30 bg-white/10 px-5 py-2.5 text-md text-white hover:bg-white/20"
               >
                 Home
               </Link>
               <button
                 onClick={loadCards}
-                className="rounded-xl bg-stone-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-stone-700"
+                className="rounded-xl bg-[#1a3a2a] px-5 py-2.5 text-lg font-medium text-white hover:bg-[#2d6a4f]"
               >
                 Review again
               </button>
@@ -295,12 +295,12 @@ export default function QuizPage() {
         {/* Error */}
         {stage === 'error' && (
           <div className="mt-6 flex flex-col gap-4">
-            <div className="rounded-2xl bg-red-50 p-5">
-              <p className="text-sm text-red-700">{errorMsg}</p>
+            <div className="rounded-2xl bg-white p-5">
+              <p className="text-md text-red-700">{errorMsg}</p>
             </div>
             <button
               onClick={loadCards}
-              className="w-full rounded-xl border border-stone-200 py-3 text-sm text-stone-600 hover:bg-stone-50"
+              className="w-full rounded-xl border border-white/30 bg-white/10 py-3 text-md text-white hover:bg-white/20"
             >
               Try again
             </button>

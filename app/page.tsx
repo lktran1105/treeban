@@ -1,65 +1,65 @@
 import Link from 'next/link'
 import { signOut } from '@/app/auth/actions'
+import LushBackground from '@/app/components/LushBackground'
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-stone-50 p-6 pb-10">
+    <main className="relative flex min-h-screen flex-col items-center justify-between overflow-hidden bg-[#1a3a2a] p-6 pb-10">
+      <LushBackground />
+
       {/* Header */}
-      <div className="flex w-full max-w-md items-center justify-between">
-        <h1 className="text-xl font-semibold tracking-tight text-stone-800">Treeban</h1>
+      <div className="relative z-10 flex w-full max-w-md items-center justify-between">
+        <h1 className="text-3xl font-semibold tracking-tight text-white">Treeban</h1>
         <form action={signOut}>
           <button
             type="submit"
-            className="text-sm text-stone-400 hover:text-stone-600 transition-colors"
+            className="text-3xl text-white/60 hover:text-white transition-colors"
           >
             Sign out
           </button>
         </form>
       </div>
 
-      {/* Hero illustration */}
-      <div className="flex flex-col items-center gap-4 text-center">
-        {/* Placeholder illustration — a simple earthy tree emoji at large scale */}
-        <div className="flex h-48 w-48 items-center justify-center rounded-full bg-green-50 text-8xl select-none">
-          🌿
-        </div>
-        <p className="max-w-xs text-sm text-stone-500">
+      {/* Hero */}
+      <div className="relative z-10 flex flex-col items-center gap-4 text-center">
+        <h2 className="text-7xl font-bold text-white tracking-tight">Treeban</h2>
+        <p className="italic max-w-m text-3xl text-white/70">
           Discover, identify, and remember the plants around you.
         </p>
       </div>
 
       {/* Navigation buttons */}
-      <nav className="flex w-full max-w-md flex-col gap-3">
+      <nav className="relative z-10 flex w-full max-w-md flex-col gap-3">
         <Link
           href="/identify"
-          className="flex items-center gap-4 rounded-2xl bg-stone-800 px-5 py-4 text-white transition-colors hover:bg-stone-700"
+          className="group flex items-center gap-4 rounded-2xl bg-white px-20 py-10 text-stone-800 transition-colors hover:bg-[#2d6a4f]"
         >
-          <span className="text-2xl">📷</span>
+          <span className="text-4xl">📷</span>
           <div>
-            <p className="font-medium leading-tight">Plant Identification</p>
-            <p className="text-xs text-stone-300">Upload or take a photo</p>
+            <p className="font-medium text-2xl leading-tight group-hover:text-white">Plant Identification</p>
+            <p className="text-md text-stone-500 group-hover:text-white/80">Upload or take a photo</p>
           </div>
         </Link>
 
         <Link
           href="/timeline"
-          className="flex items-center gap-4 rounded-2xl border border-stone-200 bg-white px-5 py-4 text-stone-800 transition-colors hover:bg-stone-50"
+          className="group flex items-center gap-4 rounded-2xl bg-white px-20 py-10 text-stone-800 transition-colors hover:bg-[#2d6a4f]"
         >
-          <span className="text-2xl">🗓</span>
+          <span className="text-4xl">🗓</span>
           <div>
-            <p className="font-medium leading-tight">Timeline</p>
-            <p className="text-xs text-stone-400">Browse your discoveries</p>
+            <p className="font-medium text-2xl leading-tight group-hover:text-white">Timeline</p>
+            <p className="text-md text-stone-500 group-hover:text-white/80">Browse your discoveries</p>
           </div>
         </Link>
 
         <Link
           href="/quiz"
-          className="flex items-center gap-4 rounded-2xl border border-stone-200 bg-white px-5 py-4 text-stone-800 transition-colors hover:bg-stone-50"
+          className="group flex items-center gap-4 rounded-2xl bg-white px-20 py-10 text-stone-800 transition-colors hover:bg-[#2d6a4f]"
         >
-          <span className="text-2xl">🧠</span>
+          <span className="text-4xl">🧠</span>
           <div>
-            <p className="font-medium leading-tight">Quiz</p>
-            <p className="text-xs text-stone-400">Test your plant knowledge</p>
+            <p className="font-medium text-2xl leading-tight group-hover:text-white">Quiz</p>
+            <p className="text-md text-stone-500 group-hover:text-white/80">Remember your plant&apos;s names</p>
           </div>
         </Link>
       </nav>
