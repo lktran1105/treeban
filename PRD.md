@@ -184,6 +184,7 @@ Treeban is a web app that helps users learn and remember plants through real-wor
 - Results display the plant name and confidence score. If confidence < 0.5, multiple suggestions are shown with an amber "Low confidence" label.
 - The results screen will have an option to create a flashcard
 - After the user clicks create flashcard, it will show a flashcard creation screen where the user can add a personal note
+- After the flashcard is saved, the confirmation screen shows two options: "Identify another plant" (resets the flow) and "See all flashcards" (navigates to `/flashcards`)
 
 ## Screen 4: Timeline Screen
 - The timeline screen will show a list of all the identified plants in chronological order

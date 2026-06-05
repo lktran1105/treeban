@@ -63,6 +63,13 @@ export default async function TimelinePage() {
   const identifications = data ?? []
   const groups = groupByDay(identifications)
 
+  const { data: flashcardRows } = await supabase
+    .from('flashcards')
+    .select('plant_identification_id')
+    .eq('user_id', user.id)
+
+  const flashcardedIds = new Set((flashcardRows ?? []).map((r) => r.plant_identification_id as string))
+
   return (
     <main className="relative flex h-screen flex-col items-center overflow-hidden bg-[#1a3a2a] p-4">
       <LushBackground />
@@ -83,7 +90,7 @@ export default async function TimelinePage() {
             </Link>
           </div>
         ) : (
-          <TimelineList groups={groups} />
+          <TimelineList groups={groups} flashcardedIds={flashcardedIds} />
         )}
       </div>
     </main>

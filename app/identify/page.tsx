@@ -406,6 +406,12 @@ export default function IdentifyPage() {
             >
               Identify another plant
             </button>
+            <Link
+              href="/flashcards"
+              className="w-full rounded-xl border border-white/30 bg-white/10 py-3 text-center text-lg font-medium text-white transition-colors hover:bg-white/20"
+            >
+              See all flashcards
+            </Link>
           </div>
         )}
 
