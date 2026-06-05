@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import mockResponse from '@/lib/fixtures/plant-mock.json'
 
-const PLANT_ID_URL = 'https://plant.id/api/v3/identification'
+const PLANT_ID_URL = 'https://plant.id/api/v3/identification?details=common_names'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     const plantRes = await fetch(PLANT_ID_URL, {
       method: 'POST',
       headers: { 'Api-Key': apiKey, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ images: [dataUrl], details: ['common_names'] }),
+      body: JSON.stringify({ images: [dataUrl] }),
     })
 
     if (!plantRes.ok) {
