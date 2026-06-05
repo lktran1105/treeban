@@ -13,7 +13,7 @@ export async function GET() {
   // Cards due for review
   const { data: due, error: dueError } = await supabase
     .from('flashcards')
-    .select('id, plant_name, image_url, personal_note, next_review_at')
+    .select('id, plant_name, common_name, image_url, personal_note, next_review_at')
     .eq('user_id', user.id)
     .lte('next_review_at', now)
 

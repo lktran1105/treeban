@@ -8,6 +8,7 @@ import LushBackground from '@/app/components/LushBackground'
 interface Flashcard {
   id: string
   plant_name: string
+  common_name: string | null
   image_url: string
   personal_note: string | null
   next_review_at: string
@@ -72,7 +73,10 @@ export default function QuizPage() {
 
   function handleCheckAnswer() {
     const card = cards[index]
-    const correct = answer.trim().toLowerCase() === card.plant_name.toLowerCase()
+    const input = answer.trim().toLowerCase()
+    const correct =
+      input === card.plant_name.toLowerCase() ||
+      (card.common_name != null && input === card.common_name.toLowerCase())
     setIsCorrect(correct)
     setStage('answered')
   }
@@ -171,6 +175,7 @@ export default function QuizPage() {
             </div>
 
             <p className="text-md font-medium text-white">What plant is this?</p>
+            <p className="text-xs text-white/50">Common or scientific name accepted</p>
 
             <input
               ref={inputRef}
@@ -210,7 +215,10 @@ export default function QuizPage() {
               <p className={`text-md font-medium ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
                 {isCorrect ? '✓ Correct!' : '✗ Not quite.'}
               </p>
-              <p className="mt-1 text-md italic text-stone-700">{card.plant_name}</p>
+              {card.common_name && (
+                <p className="mt-1 text-md font-medium text-stone-700">{card.common_name}</p>
+              )}
+              <p className="mt-0.5 text-md italic text-stone-500">{card.plant_name}</p>
               {!isCorrect && answer.trim() && (
                 <p className="mt-0.5 text-sm text-stone-400">You answered: {answer.trim()}</p>
               )}
@@ -253,7 +261,10 @@ export default function QuizPage() {
 
             <div className="rounded-2xl bg-white p-5">
               <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Answer</p>
-              <p className="mt-1 text-2xl font-semibold italic text-stone-800">{card.plant_name}</p>
+              {card.common_name && (
+                <p className="mt-1 text-2xl font-semibold text-stone-800">{card.common_name}</p>
+              )}
+              <p className={`italic text-stone-600 ${card.common_name ? 'mt-0.5 text-lg' : 'mt-1 text-2xl font-semibold'}`}>{card.plant_name}</p>
             </div>
 
             {card.personal_note && (

@@ -7,6 +7,7 @@ import LushBackground from '@/app/components/LushBackground'
 
 interface Suggestion {
   name: string
+  commonName: string | null
   probability: number
 }
 
@@ -132,6 +133,7 @@ export default function IdentifyPage() {
         body: JSON.stringify({
           plantIdentificationId: result.identificationId,
           plantName: result.suggestions[0].name,
+          commonName: result.suggestions[0].commonName ?? undefined,
           imageUrl: result.imageUrl,
           personalNote: personalNote.trim() || undefined,
         }),
@@ -287,7 +289,10 @@ export default function IdentifyPage() {
             {!showMultiple ? (
               <div className="rounded-2xl bg-white p-5 shadow-sm border border-stone-100">
                 <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Best match</p>
-                <p className="mt-1 text-2xl font-semibold text-stone-800 italic">{topSuggestion.name}</p>
+                {topSuggestion.commonName && (
+                  <p className="mt-1 text-2xl font-semibold text-stone-800">{topSuggestion.commonName}</p>
+                )}
+                <p className={`italic text-stone-500 ${topSuggestion.commonName ? 'mt-0.5 text-md' : 'mt-1 text-2xl font-semibold text-stone-800'}`}>{topSuggestion.name}</p>
                 <p className="mt-1 text-md text-stone-500">{Math.round(topSuggestion.probability * 100)}% confidence</p>
               </div>
             ) : (
@@ -296,7 +301,10 @@ export default function IdentifyPage() {
                 <ul className="mt-3 flex flex-col gap-3">
                   {result.suggestions.map((s, i) => (
                     <li key={i} className="flex items-center justify-between">
-                      <span className="text-md font-medium text-stone-800 italic">{s.name}</span>
+                      <span className="text-md font-medium text-stone-800">
+                        {s.commonName ?? <span className="italic">{s.name}</span>}
+                        {s.commonName && <span className="block text-xs italic text-stone-400">{s.name}</span>}
+                      </span>
                       <span className="text-md text-stone-400">{Math.round(s.probability * 100)}%</span>
                     </li>
                   ))}
@@ -331,8 +339,17 @@ export default function IdentifyPage() {
             )}
 
             <div className="rounded-2xl bg-white p-5 shadow-sm border border-stone-100">
-              <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Plant</p>
-              <p className="mt-1 text-2xl font-semibold text-stone-800 italic">{topSuggestion.name}</p>
+              {topSuggestion.commonName && (
+                <>
+                  <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Common name</p>
+                  <p className="mt-1 text-2xl font-semibold text-stone-800">{topSuggestion.commonName}</p>
+                  <p className="mt-3 text-xs font-medium uppercase tracking-wider text-stone-400">Scientific name</p>
+                </>
+              )}
+              {!topSuggestion.commonName && (
+                <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Plant</p>
+              )}
+              <p className="mt-1 text-lg italic text-stone-600">{topSuggestion.name}</p>
             </div>
 
             <div className="flex flex-col gap-1">
@@ -345,7 +362,7 @@ export default function IdentifyPage() {
                 onChange={e => setPersonalNote(e.target.value)}
                 placeholder="Where did you find this? What was it like?"
                 rows={3}
-                className="rounded-xl border border-stone-200 px-3 py-2 text-md text-stone-800 outline-none focus:border-stone-400 focus:ring-2 focus:ring-stone-100 resize-none"
+                className="rounded-xl border border-stone-200 px-3 py-2 text-md text-white outline-none focus:border-stone-400 focus:ring-2 focus:ring-stone-100 resize-none"
               />
             </div>
 
@@ -377,6 +394,9 @@ export default function IdentifyPage() {
               <span className="text-4xl">🌿</span>
               <div>
                 <p className="text-2xl font-semibold text-stone-800">Flashcard saved!</p>
+                {topSuggestion.commonName && (
+                  <p className="mt-0.5 text-md font-medium text-stone-700">{topSuggestion.commonName}</p>
+                )}
                 <p className="mt-0.5 text-md italic text-stone-500">{topSuggestion.name}</p>
               </div>
             </div>

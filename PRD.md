@@ -190,6 +190,8 @@ Treeban is a web app that helps users learn and remember plants through real-wor
 - Each plant in the timeline will have an image, the name of the plant, and the date it was identified
 - Plants are grouped by day, month, and year
 - This is a filtered view of plant_identifications sorted by date — no separate collections table
+- Card header shows common name (primary, bold); scientific name shown below in italic if a common name exists
+- Tapping a card opens a modal overlay with a full-width image, common name, scientific name, date, time, and confidence score
 
 ## Screen 5: Quiz Screen
 - The quiz screen will show a random plant from the user's identified plants
@@ -318,7 +320,8 @@ Each row = one plant scan.
 | id | uuid | Auto-generated |
 | user_id | uuid | Foreign key → users.id |
 | image_url | string | Link to image in Supabase Storage |
-| plant_name | string | Top result from Plant.id e.g. "Monstera deliciosa" |
+| plant_name | string | Scientific name from Plant.id e.g. "Monstera deliciosa" |
+| common_name | string (nullable) | Common name from Plant.id e.g. "Swiss cheese plant" |
 | confidence_score | float | Probability score from Plant.id e.g. 0.87 |
 | identified_at | timestamp | Auto-generated at time of scan |
 

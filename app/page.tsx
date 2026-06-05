@@ -22,8 +22,8 @@ export default function Home() {
 
       {/* Hero */}
       <div className="relative z-10 flex flex-col items-center gap-4 text-center">
-        <h2 className="text-7xl font-bold text-white tracking-tight">Treeban</h2>
-        <p className="italic max-w-m text-3xl text-white/70">
+        <h2 className="text-4xl font-bold text-white tracking-tight">Treeban</h2>
+        <p className="italic max-w-m text-xl text-white/70">
           Discover, identify, and remember the plants around you.
         </p>
       </div>

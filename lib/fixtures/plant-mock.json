@@ -10,17 +10,20 @@
         {
           "name": "Monstera deliciosa",
           "probability": 0.92,
-          "similar_images": []
+          "similar_images": [],
+          "details": { "common_names": ["Swiss Cheese Plant"] }
         },
         {
           "name": "Monstera adansonii",
           "probability": 0.05,
-          "similar_images": []
+          "similar_images": [],
+          "details": { "common_names": ["Adanson's Monstera"] }
         },
         {
           "name": "Epipremnum aureum",
           "probability": 0.02,
-          "similar_images": []
+          "similar_images": [],
+          "details": { "common_names": ["Golden Pothos"] }
         }
       ]
     }

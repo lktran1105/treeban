@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     const plantRes = await fetch(PLANT_ID_URL, {
       method: 'POST',
       headers: { 'Api-Key': apiKey, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ images: [dataUrl] }),
+      body: JSON.stringify({ images: [dataUrl], details: ['common_names'] }),
     })
 
     if (!plantRes.ok) {
@@ -88,6 +88,7 @@ export async function POST(req: NextRequest) {
       user_id: user.id,
       image_url: publicUrl,
       plant_name: topSuggestion.name,
+      common_name: topSuggestion.commonName ?? null,
       confidence_score: topSuggestion.probability,
     })
     .select('id')
@@ -108,6 +109,7 @@ export async function POST(req: NextRequest) {
 interface Suggestion {
   name: string
   probability: number
+  details?: { common_names?: string[] }
 }
 
 interface PlantIdResponse {
@@ -125,6 +127,7 @@ function normalizeResponse(data: PlantIdResponse) {
     isPlant,
     suggestions: suggestions.map((s: Suggestion) => ({
       name: s.name,
+      commonName: s.details?.common_names?.[0] ?? null,
       probability: s.probability,
     })),
   }

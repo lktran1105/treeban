@@ -1,12 +1,13 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import LushBackground from '@/app/components/LushBackground'
+import TimelineList from './TimelineList'
 
 interface PlantIdentification {
   id: string
   plant_name: string
+  common_name: string | null
   image_url: string
   confidence_score: number
   identified_at: string
@@ -42,7 +43,7 @@ export default async function TimelinePage() {
 
   const { data, error } = await supabase
     .from('plant_identifications')
-    .select('id, plant_name, image_url, confidence_score, identified_at')
+    .select('id, plant_name, common_name, image_url, confidence_score, identified_at')
     .eq('user_id', user.id)
     .order('identified_at', { ascending: false })
 
@@ -63,9 +64,9 @@ export default async function TimelinePage() {
   const groups = groupByDay(identifications)
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center overflow-hidden bg-[#1a3a2a] p-4">
+    <main className="relative flex h-screen flex-col items-center overflow-hidden bg-[#1a3a2a] p-4">
       <LushBackground />
-      <div className="relative z-10 w-full max-w-md pt-6">
+      <div className="relative z-10 flex h-full w-full max-w-md flex-col pt-6">
         <Link href="/" className="text-xl text-white/60 hover:text-white">← Back</Link>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white">Timeline</h1>
 
@@ -82,44 +83,7 @@ export default async function TimelinePage() {
             </Link>
           </div>
         ) : (
-          <div className="mt-6 flex flex-col gap-8 pb-10">
-            {groups.map((group) => (
-              <section key={group.label}>
-                <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/50">
-                  {group.label}
-                </h2>
-                <div className="flex flex-col gap-3">
-                  {group.entries.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex items-center gap-4 rounded-2xl bg-white p-3 shadow-sm border border-stone-100"
-                    >
-                      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
-                        <Image
-                          src={item.image_url}
-                          alt={item.plant_name}
-                          fill
-                          className="object-cover"
-                          sizes="64px"
-                        />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-lg font-medium italic text-stone-800">{item.plant_name}</p>
-                        <p className="mt-0.5 text-xs text-stone-400">
-                          {new Date(item.identified_at).toLocaleTimeString('en-US', {
-                            hour: 'numeric',
-                            minute: '2-digit',
-                          })}
-                          {' · '}
-                          {Math.round(item.confidence_score * 100)}% confidence
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
+          <TimelineList groups={groups} />
         )}
       </div>
     </main>
