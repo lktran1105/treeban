@@ -48,7 +48,8 @@ export async function POST(req: NextRequest) {
     })
 
     if (!plantRes.ok) {
-      console.error('Plant.id error:', plantRes.status)
+      const errBody = await plantRes.text()
+      console.error('Plant.id error:', plantRes.status, errBody)
       return NextResponse.json(
         { error: 'Plant identification failed. Please try again.' },
         { status: 502 }
