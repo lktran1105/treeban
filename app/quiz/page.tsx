@@ -184,7 +184,7 @@ export default function QuizPage() {
               onChange={e => setAnswer(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter' && answer.trim()) handleCheckAnswer() }}
               placeholder="Type the plant name…"
-              className="rounded-xl border border-stone-200 px-3 py-2.5 text-md text-stone-800 outline-none focus:border-stone-400 focus:ring-2 focus:ring-stone-100"
+              className="rounded-xl border border-stone-200 px-3 py-2.5 text-md text-white outline-none focus:border-stone-400 focus:ring-2 focus:ring-stone-100"
             />
 
             <button

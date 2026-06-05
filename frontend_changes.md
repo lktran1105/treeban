@@ -3,6 +3,7 @@
 - Put all the buttons with the dark green color, with white text. 
 
 ## All pages (global)
+- Primary font is **Playfair Display** (Google Fonts, loaded via `next/font/google` as `Playfair_Display`). High-contrast editorial serif with a calligraphic italic — applied site-wide as the default `font-sans`.
 - All pages use the dark green background (`#1a3a2a`) with the lush botanical SVG illustration.
 - Font sizes on inner pages (identify, quiz, timeline) scaled up to match the homepage: page headings `text-3xl`, card titles `text-2xl`, body/label text `text-md`, button text `text-lg`.
 - Primary buttons use dark green (`#1a3a2a`) with white text across all pages.

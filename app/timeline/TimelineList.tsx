@@ -155,9 +155,9 @@ export default function TimelineList({
                 {selected.common_name ?? selected.plant_name}
               </p>
               {selected.common_name && (
-                <p className="mt-0.5 text-base italic text-stone-500">{selected.plant_name}</p>
+                <p className="mt-0.5 text-xl text-base italic text-stone-700">{selected.plant_name}</p>
               )}
-              <p className="mt-3 text-sm text-stone-400">
+              <p className="mt-3 text-md text-stone-500">
                 {new Date(selected.identified_at).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -169,7 +169,7 @@ export default function TimelineList({
                   minute: '2-digit',
                 })}
               </p>
-              <p className="mt-1 text-sm text-stone-400">
+              <p className="mt-1 text-md text-stone-500">
                 {Math.round(selected.confidence_score * 100)}% confidence
               </p>
             </div>

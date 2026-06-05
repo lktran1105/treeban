@@ -29,14 +29,14 @@ export default function Home() {
       </div>
 
       {/* Navigation buttons */}
-      <nav className="relative z-10 grid w-full max-w-md grid-cols-2 gap-3">
+      <nav className="relative z-10 grid w-full max-w-lg grid-cols-2 gap-3">
         <Link
           href="/identify"
           className="group flex flex-col items-center gap-2 rounded-2xl bg-white px-4 py-8 text-stone-800 transition-colors hover:bg-[#2d6a4f]"
         >
           <span className="text-4xl">📷</span>
-          <p className="font-medium text-lg leading-tight text-center group-hover:text-white">Identification</p>
-          <p className="text-xs text-stone-500 text-center group-hover:text-white/80">Upload or take a photo</p>
+          <p className="font-medium text-xl leading-tight text-center group-hover:text-white">Identification</p>
+          <p className="text-md text-stone-500 text-center group-hover:text-white/80">Upload or take a photo</p>
         </Link>
 
         <Link
@@ -44,17 +44,17 @@ export default function Home() {
           className="group flex flex-col items-center gap-2 rounded-2xl bg-white px-4 py-8 text-stone-800 transition-colors hover:bg-[#2d6a4f]"
         >
           <span className="text-4xl">🗓</span>
-          <p className="font-medium text-lg leading-tight text-center group-hover:text-white">Timeline</p>
-          <p className="text-xs text-stone-500 text-center group-hover:text-white/80">Browse your discoveries</p>
+          <p className="font-medium text-xl leading-tight text-center group-hover:text-white">Timeline</p>
+          <p className="text-md text-stone-500 text-center group-hover:text-white/80">Browse your discoveries</p>
         </Link>
 
         <Link
           href="/flashcards"
           className="group flex flex-col items-center gap-2 rounded-2xl bg-white px-4 py-8 text-stone-800 transition-colors hover:bg-[#2d6a4f]"
         >
-          <span className="text-4xl">🃏</span>
-          <p className="font-medium text-lg leading-tight text-center group-hover:text-white">Flashcards</p>
-          <p className="text-xs text-stone-500 text-center group-hover:text-white/80">Study your plants</p>
+          <span className="text-4xl">📒</span>
+          <p className="font-medium text-xl leading-tight text-center group-hover:text-white">Flashcards</p>
+          <p className="text-md text-stone-500 text-center group-hover:text-white/80">Study your plants</p>
         </Link>
 
         <Link
@@ -62,8 +62,8 @@ export default function Home() {
           className="group flex flex-col items-center gap-2 rounded-2xl bg-white px-4 py-8 text-stone-800 transition-colors hover:bg-[#2d6a4f]"
         >
           <span className="text-4xl">🧠</span>
-          <p className="font-medium text-lg leading-tight text-center group-hover:text-white">Quiz</p>
-          <p className="text-xs text-stone-500 text-center group-hover:text-white/80">Remember plant names</p>
+          <p className="font-medium text-xl leading-tight text-center group-hover:text-white">Quiz</p>
+          <p className="text-md text-stone-500 text-center group-hover:text-white/80">Remember plant names</p>
         </Link>
       </nav>
     </main>
