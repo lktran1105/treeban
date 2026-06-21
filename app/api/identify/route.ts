@@ -13,18 +13,6 @@ export async function POST(req: NextRequest) {
   }
 
   const admin = createAdminClient()
-  const { count } = await admin
-    .from('plant_identifications')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', user.id)
-    .gte('identified_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
-
-  if ((count ?? 0) >= 2) {
-    return NextResponse.json(
-      { error: 'Daily limit reached. You can identify 2 plants per 24 hours.' },
-      { status: 429 }
-    )
-  }
 
   const formData = await req.formData()
   const file = formData.get('image')

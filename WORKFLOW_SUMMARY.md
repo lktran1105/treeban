@@ -4,7 +4,7 @@
 Claude Code over ~3 weeks (May 22 – Jun 8, 2026), reconstructed from the 7 conversations of
 the build. Organized by theme, with selected quotes from both sides.*
 
-> **Why "Treeban"?** As the user put it in the LinkedIn post drafted at the end:
+> **Why "Treeban"?** 
 > *"This inspires me to build 'Treeban' (ban means 'friends' in Vietnamese!)."* — your plant friend.
 
 ## Timeline
@@ -37,8 +37,7 @@ that held for the whole project:
 > to GitHub → auto deploys)' but CLAUDE.md has a hard rule: 'No auto-deploys.' These directly
 > contradict. Do you want auto-deploy on push, or manual Vercel deploys?"*
 
-The deeper personal motivation only surfaced explicitly at the very end, when the user drafted
-a launch post — and it reframes the whole build:
+The deeper personal motivation is from the need and want to not only identify the plants, but also remember them by name.
 
 > **User:** *"Have you ever identified a plant, and then just forgets about it? I live in a
 > beautiful neighborhood, and I really want to be able to point them out with their name."*
